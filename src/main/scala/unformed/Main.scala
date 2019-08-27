@@ -14,11 +14,10 @@ import unformed.storage.StorageManager.{IncomingMessage, Tick}
 object Main extends App {
 
   implicit val system: ActorSystem = ActorSystem("parent-system")
-
   implicit val materializer: ActorMaterializer = ActorMaterializer()
 
-  val host = "127.0.0.1"
-  val port = 5555
+  val sourceHost = "127.0.0.1"
+  val sourcePort = 5555
 
   val storage = system.actorOf(Props[StorageManager])
   val clientServer = system.actorOf(Props(new Server(storage)))
@@ -28,7 +27,7 @@ object Main extends App {
   scheduler.schedule("everyMinute", storage, Tick)
 
   Source.maybe[ByteString]
-    .via(Tcp().outgoingConnection(host, port))
+    .via(Tcp().outgoingConnection(sourceHost, sourcePort))
     .map(BitVector.apply)
     .map(value => Deal.codec.decodeValue(value).require)
     .to(Sink.foreach(msg => storage ! IncomingMessage(msg))).run()
