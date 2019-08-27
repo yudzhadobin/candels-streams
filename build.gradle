@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+    id 'scala'
+}
+
+group 'org.home'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.scala-lang:scala-library:2.12.8'
+    compile 'com.typesafe.akka:akka-slf4j_2.12:2.5.19'
+    compile 'com.typesafe.akka:akka-stream_2.12:2.5.19'
+    compile group: 'org.scodec', name: 'scodec-bits_2.12', version: '1.1.12'
+    compile group: 'org.scodec', name: 'scodec-core_2.12', version: '1.11.4'
+    compile 'io.circe:circe-core_2.12:0.11.0'
+    compile 'io.circe:circe-generic_2.12:0.11.0'
+    compile 'io.circe:circe-generic-extras_2.12:0.11.0'
+    compile 'de.heikoseeberger:akka-http-circe_2.12:1.23.0'
+    compile 'ch.qos.logback:logback-classic:1.1.8'
+    compile 'com.typesafe.scala-logging:scala-logging_2.12:3.7.2'
+    compile 'com.enragedginger:akka-quartz-scheduler_2.12:1.8.0-akka-2.5.x'
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
